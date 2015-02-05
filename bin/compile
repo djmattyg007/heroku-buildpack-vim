@@ -1,0 +1,20 @@
+#!/bin/sh
+
+indent() {
+  sed -u 's/^/       /'
+}
+
+echo "-----> Install vim 7.3"
+BUILD_DIR=$1
+DOWNLOAD_URL="https://s3.amazonaws.com/heroku-vim/vim-7.3.tar.gz"
+
+echo "DOWNLOAD_URL = " $DOWNLOAD_URL | indent
+
+cd $BUILD_DIR
+mkdir vim
+curl https://s3.amazonaws.com/heroku-vim/vim-7.3.tar.gz --location --silent | tar xz -C vim
+
+echo "exporting PATH and LIBRARY_PATH" | indent
+PROFILE_PATH="$BUILD_DIR/.profile.d/vim73.sh"
+mkdir -p $(dirname $PROFILE_PATH)
+echo 'export PATH=$PATH:/app/vim/bin' >> $PROFILE_PATH
