@@ -27,6 +27,6 @@ printlog "Installing vim"
 mkdir -p $INSTALL_DIR
 tar xzf "$CACHE_DIR/$DOWNLOAD_FILE" -C $INSTALL_DIR
 
-mkdir -p $PROFILE_PATH
-echo "export PATH=\$PATH:$INSTALL_DIR/bin" > $PROFILE_PATH/vim.sh
+mkdir -p $PROFILE_DIR
+echo "export PATH=\$PATH:$INSTALL_DIR/bin" > $PROFILE_DIR/vim.sh
 
