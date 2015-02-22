@@ -1,20 +1,32 @@
 #!/bin/bash
 
+echo "-----> Install vim 7.3"
+
+BUILD_DIR=$1
+CACHE_DIR="$2/vim"
+INSTALL_DIR="$BUILD_DIR/.heroku/vim"
+PROFILE_DIR="$BUILD_DIR/.profile.d"
+DOWNLOAD_URL="https://s3.amazonaws.com/heroku-vim/vim-7.3.tar.gz"
+DOWNLOAD_FILE="vim-7.3.tar.gz"
+
 indent() {
   sed -u 's/^/       /'
 }
 
-echo "-----> Install vim 7.3"
-BUILD_DIR=$1
-DOWNLOAD_URL="https://s3.amazonaws.com/heroku-vim/vim-7.3.tar.gz"
+printlog() {
+    echo $1 | indent
+}
 
-echo "DOWNLOAD_URL = " $DOWNLOAD_URL | indent
+if [[ ! -f "$CACHE_DIR/$DOWNLOAD_FILE" ]]; then
+    printlog "Downloading vim"
+    printlog "DOWNLOAD_URL = $DOWNLOAD_URL"
+    wget -q -O "$CACHE_DIR/$DOWNLOAD_FILE" $DOWNLOAD_URL
+fi
 
-cd $BUILD_DIR
-mkdir vim
-curl https://s3.amazonaws.com/heroku-vim/vim-7.3.tar.gz --location --silent | tar xz -C vim
+printlog "Installing vim"
+mkdir -p $INSTALL_DIR
+tar xzf "$CACHE_DIR/$DOWNLOAD_FILE" -C $INSTALL_DIR
 
-echo "exporting PATH and LIBRARY_PATH" | indent
-PROFILE_PATH="$BUILD_DIR/.profile.d/vim73.sh"
-mkdir -p $(dirname $PROFILE_PATH)
-echo 'export PATH=$PATH:/app/vim/bin' >> $PROFILE_PATH
+mkdir -p $PROFILE_PATH
+echo "export PATH=\$PATH:$INSTALL_DIR/bin" > $PROFILE_PATH/vim.sh
+
