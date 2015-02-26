@@ -17,6 +17,8 @@ printlog() {
     echo $1 | indent
 }
 
+mkdir -p $CACHE_DIR
+
 if [[ ! -f "$CACHE_DIR/$DOWNLOAD_FILE" ]]; then
     printlog "Downloading vim"
     printlog "DOWNLOAD_URL = $DOWNLOAD_URL"
