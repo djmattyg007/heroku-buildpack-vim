@@ -10,7 +10,7 @@ DOWNLOAD_URL="https://s3.amazonaws.com/heroku-vim/vim-7.3.tar.gz"
 DOWNLOAD_FILE="vim-7.3.tar.gz"
 
 indent() {
-  sed -u 's/^/       /'
+    sed -u 's/^/       /'
 }
 
 printlog() {
