@@ -4,7 +4,8 @@ echo "-----> Install vim 7.3"
 
 BUILD_DIR=$1
 CACHE_DIR="$2/vim"
-INSTALL_DIR="$BUILD_DIR/.heroku/vim"
+INSTALL_PATH=".heroku/vim"
+INSTALL_DIR="$BUILD_DIR/$INSTALL_PATH"
 PROFILE_DIR="$BUILD_DIR/.profile.d"
 DOWNLOAD_URL="https://s3.amazonaws.com/heroku-vim/vim-7.3.tar.gz"
 DOWNLOAD_FILE="vim-7.3.tar.gz"
@@ -30,5 +31,5 @@ mkdir -p $INSTALL_DIR
 tar xzf "$CACHE_DIR/$DOWNLOAD_FILE" -C $INSTALL_DIR
 
 mkdir -p $PROFILE_DIR
-echo "export PATH=\$PATH:$INSTALL_DIR/bin" > $PROFILE_DIR/vim.sh
+echo "export PATH=\$PATH:\$HOME/$INSTALL_PATH/bin" > $PROFILE_DIR/vim.sh
 
